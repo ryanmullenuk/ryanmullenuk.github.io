@@ -11,6 +11,19 @@
   <meta property="og:title" content="Redhead Games — Independent apps &amp; games" />
   <meta property="og:description" content="A little creativity. A little strategy. Something useful. Explore our apps and games." />
   <meta property="og:image" content="https://redhead.games/img/logo.png" />
+  <link rel="stylesheet" href="redhead-logo/redhead-logo.css?v=1" />
+  <script>
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      document.documentElement.classList.add('splash-pending');
+      window.redheadSplashSafety = setTimeout(function () {
+        document.documentElement.classList.remove('splash-pending');
+        var page = document.querySelector('.page');
+        if (page) page.inert = false;
+        var splash = document.getElementById('intro-splash');
+        if (splash) splash.remove();
+      }, 7000);
+    }
+  </script>
   <style>
     :root { color-scheme: dark; --bg: #0b0a0d; --ink: #f4f1f6; --muted: #b3aab8; --line: #302830; --red: #ff4851; }
     * { box-sizing: border-box; }
@@ -54,6 +67,15 @@
     .no-webgl #fluid-canvas { background: radial-gradient(circle at 58% 42%, rgba(255,35,56,.25), transparent 24%), radial-gradient(circle at 35% 72%, rgba(126,0,17,.3), transparent 31%); }
     header, .browser, footer { text-shadow: 0 2px 12px #000; }
     @media (pointer: coarse), (prefers-reduced-motion: reduce) { .cursor-aura, .cursor-core { display: none; } }
+    .intro-splash { display: none; position: fixed; inset: 0; z-index: 100; place-items: center; overflow: hidden; background: #050304; opacity: 1; transition: opacity 650ms ease; }
+    .splash-pending .intro-splash { display: grid; }
+    .splash-pending { overflow: hidden; }
+    .splash-pending .page { opacity: 0; }
+    .intro-splash.is-leaving { opacity: 0; pointer-events: none; }
+    .splash-pending.splash-revealing .page { opacity: 1; }
+    .intro-splash .rh-logo { --rh-width: 360px; width: min(360px, 72vw, 58svh); isolation: isolate; cursor: default; }
+    .rh-logo img.rh-games { width: 48.4%; }
+    @media (prefers-reduced-motion: reduce) { .intro-splash { display: none !important; transition: none; } .splash-pending .page { opacity: 1; } }
     @media (max-width: 480px) {
       .page { width: calc(100% - 32px); }
       header { padding-bottom: 32px; }
@@ -66,6 +88,23 @@
   </style>
 </head>
 <body>
+  <div id="intro-splash" class="intro-splash" aria-hidden="true">
+<div class="rh-logo" role="img" aria-label="Redhead Games">
+  <div class="rh-brain-wrap">
+    <div class="rh-glow"></div>
+    <svg class="rh-shock" viewBox="0 0 100 100" aria-hidden="true">
+      <circle class="rh-ring1" cx="50" cy="50" r="48"/>
+      <circle class="rh-ring2" cx="50" cy="50" r="48"/>
+    </svg>
+    <div class="rh-brain">
+      <div class="rh-half rh-left"><img src="/redhead-logo/images/brain.webp" alt=""></div>
+      <div class="rh-half rh-right"><img src="/redhead-logo/images/brain.webp" alt=""></div>
+    </div>
+  </div>
+  <img class="rh-word" src="/redhead-logo/images/word.webp" alt="">
+  <img class="rh-games" src="/redhead-logo/images/games.webp" alt="">
+</div>
+  </div>
   <div class="redshift-background" aria-hidden="true">
     <canvas id="fluid-canvas"></canvas>
     <div class="ambient-red"></div>
@@ -127,6 +166,7 @@
       <nav aria-label="Support and legal"><a href="/noir-market/support.html">Contact support</a><a href="/noir-market/privacy.html">Privacy</a></nav>
     </footer>
   </div>
+  <script src="redhead-logo/redhead-logo.js?v=1" defer></script>
   <script src="redshift.js?v=1" defer></script>
 </body>
 </html>
